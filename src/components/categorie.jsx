@@ -89,7 +89,7 @@ function Categorie() {
                                 </Grid>
                             )
                            }
-                           if(Product.Categorie != _id){
+                           if(products.length == '0'){
                             return (                               
                                 <Grid key={index.toString()} item lg={12} md={12} sm={12} xs={12}>
                                    <h3 style={{color:'blue',textAlign:'center',fontFamily:'monospace'}}>No products available</h3>

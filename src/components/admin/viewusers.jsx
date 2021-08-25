@@ -50,14 +50,14 @@ function Viewusers() {
         fetchUsers()
     }, [])
 
-    if(user?._id != '60e8318138b565168427cdfb'){
-        return(
-            <div style={{justifyContent:'center',alignItems:'center'}}>
-                <h1>404 Not Found</h1>
-            </div>
-        )
-    }
-    else if(user?._id == '60e8318138b565168427cdfb'){
+    // if(user?._id != '60e8318138b565168427cdfb'){
+    //     return(
+    //         <div style={{justifyContent:'center',alignItems:'center'}}>
+    //             <h1>404 Not Found</h1>
+    //         </div>
+    //     )
+    // }
+    // else if(user?._id == '60e8318138b565168427cdfb'){
     return (
         <> 
         <AdminNav />   
@@ -110,11 +110,11 @@ function Viewusers() {
             </main> 
         </>
     )
-}
-else{
-    return(
-        <Login />
-    )
-}
+// }
+// else{
+//     return(
+//         <Login />
+//     )
+// }
 }
 export default Viewusers

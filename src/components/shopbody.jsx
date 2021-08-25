@@ -103,7 +103,7 @@ function HomeBody() {
             <h3 style={{ color: '#292626', fontFamily: "unset",textAlign:'center',fontSize: 50 }}>{cat.name}</h3>
             <Container>
                 <Grid container spacing={4}>
-                    {
+                    {products ?
                         products?.map((Product, index) => {
                            if(Product.Categorie == cat._id){
                             return (                               
@@ -123,15 +123,9 @@ function HomeBody() {
                                     </Paper>
                                 </Grid>
                             )
-                           }
-                           if(Product.Categorie != cat._id){
-                            return (                               
-                                <Grid key={index.toString()} item lg={12} md={12} sm={12} xs={12}>
-                                   <h3 style={{color:'blue',textAlign:'center',fontFamily:'monospace'}}>No products available</h3>
-                                </Grid>
-                            )
-                           }
-                        })
+                           } 
+                        }) :
+                        <h3>No products available</h3>
                     }
                 </Grid>
             </Container>
