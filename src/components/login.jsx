@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         paddingBottom: '5%',
         backdropFilter: 'blur(20px)'
     },
-    input:{
+    input: {
         width: '100%'
     }
 })
@@ -56,9 +56,9 @@ const reviewSchema = yup.object({
         .min(2)
         .test("Email", "Email must fullfill the requirement example abc@gmail.com", (val) => {
             return (
-              new RegExp(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/igm).test(val)
+                new RegExp(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/igm).test(val)
             )
-          }),
+        }),
     Password: yup.string()
         .required()
         .min(6),
@@ -72,37 +72,37 @@ function Login() {
         <>
             <Nav />
             <div style={{ backgroundImage: `url(${BG})`, width: '100%', backgroundRepeat: 'no-repeat', alignItems: 'center' }}>
-                <div style={{ backgroundColor: 'hsla(0, 0%, 0%, 0.56)', width: '100%',}}>
+                <div style={{ backgroundColor: 'hsla(0, 0%, 0%, 0.56)', width: '100%', }}>
                     <Container>
-                    <Grid container>
-                        <Grid item lg={3.5} sm={1} md={3} xs={0} />
-                        <Grid className={classes.card} item lg={5} sm={10} md={6} xs={12} >
+                        <Grid container>
+                            <Grid item lg={3.5} sm={1} md={3} xs={0} />
+                            <Grid className={classes.card} item lg={5} sm={10} md={6} xs={12} >
                                 <Formik
-                                     validationSchema={reviewSchema}
+                                    validationSchema={reviewSchema}
                                     initialValues={{ Email: '', Password: '', }}
-                                    onSubmit={(values, actions) => { 
+                                    onSubmit={(values, actions) => {
                                         try {
                                             fetch(
-                                              `http://localhost:7000/ecommerce.com/backend/api/v1/login/admin@ecommerce.com/123456`)
+                                                `http://localhost:7000/ecommerce.com/backend/api/v1/login/${values.Email}/${values.Password}`)
                                                 // .then(res => res.json())
-                                            .then(async(response) => {
-                                             const resJSON = await response.json();
-                                              console.log(resJSON, "Login Response");
-                                                localStorage.setItem("user", JSON.stringify(resJSON.info));
-                                                if(resJSON.info && resJSON.info._id != '60e8318138b565168427cdfb'){
-                                                    navigate('/')
-                                                }
-                                                else if(resJSON.info && resJSON.info._id == '60e8318138b565168427cdfb'){
-                                                    navigate('/admin')
-                                                }
-                                                else{
-                                                    alert(resJSON.message)
-                                                }
-                                            });
-                                          } catch (error) {
+                                                .then(async (response) => {
+                                                    const resJSON = await response.json();
+                                                    console.log(resJSON, "Login Response");
+                                                    localStorage.setItem("user", JSON.stringify(resJSON.info));
+                                                    if (resJSON.info && resJSON.info._id !== '60e8318138b565168427cdfb') {
+                                                        navigate('/')
+                                                    }
+                                                    else if (resJSON.info && resJSON.info._id === '60e8318138b565168427cdfb') {
+                                                        navigate('/admin')
+                                                    }
+                                                    else {
+                                                        alert(resJSON.message)
+                                                    }
+                                                });
+                                        } catch (error) {
                                             alert(error);
-                                          }
-                                     }} >
+                                        }
+                                    }} >
                                     {(props) => {
                                         return (
                                             <>
@@ -110,7 +110,7 @@ function Login() {
                                                 <Grid container>
                                                     <Grid item lg={3} sm={2} md={3} xs={2} />
                                                     <Grid item lg={6} sm={8} md={6} xs={8}>
-                                                        <p style={{ color: '#1c1c15', marginBottom: '3%',marginTop: '3%', }}>Email:</p>
+                                                        <p style={{ color: '#1c1c15', marginBottom: '3%', marginTop: '3%', }}>Email:</p>
                                                         <Input
                                                             className={classes.input}
                                                             placeholder="Email"
@@ -118,12 +118,12 @@ function Login() {
                                                             value={props.values.Email}
                                                             onChange={props.handleChange("Email")}
                                                             onBlur={props.handleBlur("Email")} />
-                                                            <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Email && props.errors.Email}</p>
+                                                        <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Email && props.errors.Email}</p>
                                                     </Grid>
                                                     <Grid item lg={3} sm={2} md={3} xs={2} />
                                                     <Grid item lg={3} sm={2} md={3} xs={2} />
                                                     <Grid item lg={6} md={6} sm={8} xs={8}>
-                                                        <p style={{ color: '#1c1c15', marginBottom: '3%',marginTop: '3%', }}>Password:</p>
+                                                        <p style={{ color: '#1c1c15', marginBottom: '3%', marginTop: '3%', }}>Password:</p>
                                                         <Input
                                                             className={classes.input}
                                                             placeholder="Password"
@@ -132,7 +132,7 @@ function Login() {
                                                             value={props.values.Password}
                                                             onChange={props.handleChange("Password")}
                                                             onBlur={props.handleBlur("Password")} />
-                                                              <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Password && props.errors.Password}</p>
+                                                        <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Password && props.errors.Password}</p>
                                                     </Grid>
                                                     <Grid item lg={3} sm={2} md={3} xs={2} />
                                                     <Grid item lg={4} sm={3} md={4} xs={2} />
@@ -143,11 +143,11 @@ function Login() {
                                                     </Grid>
                                                     <Grid item lg={4} sm={3} md={4} xs={2} />
                                                     <Grid item lg={3} sm={1} md={2} />
-                                                    <Grid item  lg={6} sm={10} md={8} xs={12}>
-                                                       <div  style={{ color: '#1c1c15', textAlign: 'center', fontSize: '10px',}}>
-                                                      Don't have an account?...
-                                                        <Link style={{marginLeft:'5px', color:'blue',textDecoration: 'none' }} to='/signup'>Create One</Link>
-                                                       </div>
+                                                    <Grid item lg={6} sm={10} md={8} xs={12}>
+                                                        <div style={{ color: '#1c1c15', textAlign: 'center', fontSize: '12px', }}>
+                                                            Don't have an account?...
+                                                            <Link style={{ marginLeft: '5px', color: 'blue', textDecoration: 'none' }} to='/signup'>Create One</Link>
+                                                        </div>
                                                     </Grid>
                                                     <Grid item lg={3} sm={1} md={2} />
                                                 </Grid>
@@ -156,9 +156,9 @@ function Login() {
                                     }}
 
                                 </Formik>
+                            </Grid>
+                            <Grid item lg={3.5} sm={1} md={3} xs={0} />
                         </Grid>
-                        <Grid item lg={3.5} sm={1} md={3} xs={0} />
-                    </Grid>
                     </Container>
                 </div>
             </div >

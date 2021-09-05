@@ -70,19 +70,19 @@ const reviewSchema = yup.object({
         .min(3)
     ,
     Email: yup.string()
-    .required()
-    .test("Email", "Email must fullfill the requirement example abc@gmail.com", (val) => {
-      return (
-        new RegExp(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/igm).test(val)
-      )
-    }),
-  Phone: yup.string()
-    .required()
-    .test("Phone Number", "Phone Number must fullfill the requirement example +92-345-2323322", (val) => {
-      return (
-        new RegExp(/^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}/igm).test(val)
-      )
-    }),
+        .required()
+        .test("Email", "Email must fullfill the requirement example abc@gmail.com", (val) => {
+            return (
+                new RegExp(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/igm).test(val)
+            )
+        }),
+    Phone: yup.string()
+        .required()
+        .test("Phone Number", "Phone Number must fullfill the requirement example +92-345-2323322", (val) => {
+            return (
+                new RegExp(/^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}/igm).test(val)
+            )
+        }),
     Password: yup.string()
         .required()
         .min(6),
@@ -111,35 +111,35 @@ function Signup() {
             <Nav />
             <Grid container>
                 <Grid className={classes.about} item lg={5} sm={12} md={6}>
-                    <h1 style={{ textAlign: 'left', marginTop: '15%', marginLeft: '4.5%' }}>Sign Up to Hotel App</h1>
-                    <p style={{ textAlign: 'left', marginTop: '3%', marginLeft: '5%' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <h1 style={{ textAlign: 'left', marginTop: '15%', marginLeft: '4.5%' }}>Sign Up</h1>
+                    {/* <p style={{ textAlign: 'left', marginTop: '3%', marginLeft: '5%' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> */}
                 </Grid>
                 <Grid className={classes.signup} item lg={7} sm={12} md={6}>
                     <Formik
                         validationSchema={reviewSchema}
-                        initialValues={{Name: '', Email: '', Phone: '', Password: '', }}
-                        onSubmit={(values, actions) => { 
+                        initialValues={{ Name: '', Email: '', Phone: '', Password: '', }}
+                        onSubmit={(values, actions) => {
                             try {
                                 fetch(`http://localhost:7000/ecommerce.com/backend/api/v1/register`, {
-                                  method: 'POST',
-                                  headers: {
-                                    'Content-Type': 'application/json'
-                                  },
-                                  body: JSON.stringify(values)
-                                }).then(async(response) => {
-                                  const resJSON = await response.json()
-                                  console.log(resJSON, 'Register Response')
-                                  localStorage.setItem('user',JSON.stringify(resJSON.info))
-                                  if(resJSON.info){
-                                    navigate('/')
-                                }
-                                else{
-                                    alert(resJSON.message)
-                                }
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(values)
+                                }).then(async (response) => {
+                                    const resJSON = await response.json()
+                                    console.log(resJSON, 'Register Response')
+                                    localStorage.setItem('user', JSON.stringify(resJSON.info))
+                                    if (resJSON.info) {
+                                        navigate('/')
+                                    }
+                                    else {
+                                        alert(resJSON.message)
+                                    }
                                 })
-                              } catch (error) {
+                            } catch (error) {
                                 console.log(error)
-                              }
+                            }
                         }}>
                         {(props) => {
                             return (
@@ -147,7 +147,7 @@ function Signup() {
                                     <Container>
                                         <Grid container>
                                             <Grid item lg={12} md={12} sm={12}>
-                                                <p style={{ color: '#1c1c15',marginLeft: '2.5%' }}>Name:</p>
+                                                <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Name:</p>
                                                 <Input
                                                     className={classes.fullinput}
                                                     placeholder="Enter your Name..."
@@ -155,7 +155,7 @@ function Signup() {
                                                     value={props.values.Name}
                                                     onChange={props.handleChange("Name")}
                                                     onBlur={props.handleBlur("Name")} />
-                                                      <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Name && props.errors.Name}</p>
+                                                <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Name && props.errors.Name}</p>
                                             </Grid>
                                             <Grid item lg={12} md={12} sm={12}>
                                                 <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Email:</p>
@@ -166,7 +166,7 @@ function Signup() {
                                                     value={props.values.Email}
                                                     onChange={props.handleChange("Email")}
                                                     onBlur={props.handleBlur("Email")} />
-                                                     <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Email && props.errors.Email}</p>
+                                                <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Email && props.errors.Email}</p>
                                             </Grid>
                                             <Grid item lg={12} md={12} sm={12}>
                                                 <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Phone Number:</p>
@@ -177,27 +177,28 @@ function Signup() {
                                                     value={props.values.Phone}
                                                     onChange={props.handleChange("Phone")}
                                                     onBlur={props.handleBlur("Phone")} />
-                                                     <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Phone && props.errors.Phone}</p>
+                                                <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Phone && props.errors.Phone}</p>
                                             </Grid>
                                             <Grid item lg={12} md={12} sm={12}>
-                                                <p style={{ color: '#1c1c15',marginLeft: '5%' }}>Password:</p>
+                                                <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Password:</p>
                                                 <Input
                                                     className={classes.fullinput}
                                                     placeholder="Password"
+                                                    type="Password"
                                                     inputProps={{ 'aria-label': 'description' }}
                                                     value={props.values.Password}
                                                     onChange={props.handleChange("Password")}
                                                     onBlur={props.handleBlur("Password")} />
-                                                     <p style={{color:'#8f0707',fontWeight:'bold',fontSize:12,textAlign:'center'}}>{props.touched.Password && props.errors.Password}</p>
+                                                <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Password && props.errors.Password}</p>
                                             </Grid>
-                                         
+
                                             <Grid item lg={12} sm={12} md={12} xs={12}>
                                                 <BootstrapButton onClick={props.handleSubmit} variant="contained" color="primary" disableRipple className={classes.margin}>
                                                     Sign Up
                                                 </BootstrapButton>
                                             </Grid>
                                             <Grid item lg={12} sm={12} md={12} xs={12}>
-                                                <div style={{ color: '#1c1c15', textAlign: 'center', fontSize: '10px', }}>
+                                                <div style={{ color: '#1c1c15', textAlign: 'center', fontSize: '20px', }}>
                                                     Already have an account?...
                                                     <Link style={{ marginLeft: '5px', color: 'blue', textDecoration: 'none' }} to='/login'>Sign in</Link>
                                                 </div>

@@ -21,7 +21,7 @@ function HomeAbout() {
                 </Grid>
                 <Grid className={classes.about} item lg={6} sm={12} md={6}>
                        <h1 style={{textAlign:'left',marginTop:'20%',marginLeft:'5%',color:'#292626'}}>About Ecommerce</h1>
-                       <p style={{textAlign:'left',marginTop:'5%',marginLeft:'5%',color:'#292626',fontFamily:'unset'}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                       <p style={{textAlign:'left',marginTop:'5%',marginLeft:'5%',color:'#292626',fontFamily:'unset'}}>E-commerce (electronic commerce) is the buying and selling of goods and services, or the transmitting of funds or data, over an electronic network, primarily the internet. These business transactions occur either as business-to-business (B2B), business-to-consumer (B2C), consumer-to-consumer or consumer-to-business. The terms e-commerce and e-business are often used interchangeably. The term e-tail is also sometimes used in reference to the transactional processes that make up online retail shopping.</p>
                 </Grid>
             </Grid>
         </div>

@@ -148,7 +148,7 @@ function ContactUs() {
                                                 <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Phone Number:</p>
                                                 <Input
                                                     className={classes.fullinput}
-                                                    placeholder="Password"
+                                                    placeholder="Phone number"
                                                     inputProps={{ 'aria-label': 'description' }}
                                                     value={props.values.Phone}
                                                     onChange={props.handleChange("Phone")}
@@ -186,7 +186,9 @@ function ContactUs() {
                 </Grid>
                 <Grid className={classes.about} item lg={5} sm={12} md={5} xs={12}>
                     <h1 style={{ textAlign: 'left', marginTop: '20%', marginLeft: '4.5%', fontSize: '73px' }}>Contact Us:</h1>
-                    <p style={{ textAlign: 'left', marginTop: '3%', marginLeft: '5%', fontFamily: 'unset' }}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p style={{ textAlign: 'left', marginTop: '3%', marginLeft: '5%', fontFamily: 'unset' }}>A creator-friendly customer support team that's alway
+                    just a click away</p>
+                    <p style={{ textAlign: 'left', marginTop: '3%', marginLeft: '5%', fontFamily: 'unset' }}>Our average response time is under 5 minutes</p>
                 </Grid>
             </Grid>
             <Footer />

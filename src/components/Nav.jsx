@@ -8,11 +8,17 @@ import {
   Modal,
   Fade,
   Backdrop,
+  Fab,
+  IconButton,
 } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import LocalMallIcon from '@material-ui/icons/LocalMall';
+import CallOutlinedIcon from '@material-ui/icons/CallOutlined';
+import { AiOutlineShopping } from 'react-icons/ai';
+import { AiFillExclamationCircle } from 'react-icons/ai';
+
 
 const BootstrapButton = withStyles({
   root: {
@@ -77,6 +83,7 @@ const BagButton = withStyles({
 
 const useStyles = makeStyles((theme) => ({
   nav: {
+    padding:"20px",
     backgroundColor: "#292626",
     flexDirection: "row",
   },
@@ -90,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   search: {
+    
     backgroundColor: "hsla(360, 100%, 100%, 0.65)",
     marginTop: '2%',
     borderTopLeftRadius: 5,
@@ -109,6 +117,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflowY: "scroll",
+    paddingTop: '35%'
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
@@ -116,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
-  searchCard:{
+  searchCard: {
     maxHeight: '120px',
   }
 }));
@@ -143,7 +153,7 @@ function Nav({ position }) {
     form.append('query_img', uploadedImage)
     try {
       fetch(
-        `http://192.168.2.105:5000/`,
+        `http://192.168.0.107:5000/`,
         {
           method: "POST",
           body: form,
@@ -162,9 +172,9 @@ function Nav({ position }) {
             body: JSON.stringify(searchImages)
           }).then(async (response) => {
             const resJSON = await response.json()
-            console.log(resJSON.results)
             setSearchResults(resJSON.results)
-            handleOpen()
+            console.log(searchResults)
+            setOpen(true)
           })
         } catch (error) {
           console.log(error)
@@ -184,11 +194,11 @@ function Nav({ position }) {
     return (
       <AppBar position={position} className={classes.nav}>
         <Grid container>
-          <Grid item xs={12} lg={4} md={6} sm={12} xs={12}>
-            <Link to='/' style={{ color: '#fff', fontFamily: 'unset', fontSize: 45, fontWeight: 'bold', textDecoration: 'none', margin: '2%' }}>E-Commerce</Link>
+          <Grid item xs={12} lg={4} md={6} sm={12} >
+            <Link to='/' style={{ color: '#fff', fontFamily: 'unset', fontSize: 45, fontWeight: 'bold', textDecoration: 'none', margin: '2%' }}>Shopping Assistance System</Link>
           </Grid>
-          <Grid xs={12} lg={4} md={6} sm={12} xs={12}>
-          <div className={classes.searchBox}>
+          <Grid xs={12} lg={4} md={6} sm={12} >
+            <div className={classes.searchBox}>
               <Grid style={{ height: '100%', }} container>
                 <Grid item xs={9} lg={9} sm={9} md={9}>
                   <div className={classes.search}>
@@ -205,22 +215,30 @@ function Nav({ position }) {
                 </Grid>
                 <Grid xs={3} lg={3} sm={3} md={3}>
                   <SearchButton type="button" onClick={searchByImage}>
-                  Image Search
+                    Image Search
                   </SearchButton>
                 </Grid>
               </Grid>
             </div>
           </Grid>
-          <Grid item xs={12} lg={4} md={12} sm={12} xs={12}>
+          <Grid item xs={12} lg={4} md={12} sm={12}>
+          <IconButton  color="inherit" aria-label="upload picture" component="span" >
+
+<AiOutlineShopping/>
+</IconButton>
             <BootstrapButton
               variant="contained"
               color="primary"
               disableRipple
               className={classes.margin}
               onClick={() => navigate('/shopnow')}
+              
             >
-              Shop
+              
+             Shop
+             
             </BootstrapButton>
+          
             <BootstrapButton
               variant="contained"
               color="primary"
@@ -230,6 +248,11 @@ function Nav({ position }) {
             >
               About
             </BootstrapButton>
+
+
+         
+
+
             <BootstrapButton
               variant="contained"
               color="primary"
@@ -254,47 +277,47 @@ function Nav({ position }) {
           </Grid>
         </Grid>
         <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            className={classes.modal}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.paper}>
-              <div style={{backGroundColor:'grey'}}>
-                        <h2 style={{textAlign:'center'}}>Search Results</h2>
-                       {searchResults &&  
-                            searchResults?.map((item) => {
-                              console.log(item)                            
-                               return (   
-                                   <Grid container key={item._id}>
-                           <Grid item lg={2} md={3} sm={4} xs={12}  className={classes.searchCard} >
-                             <img src={`http://localhost:7000${item.image}`} height="97%" width="50%" style={{margin:'3%'}} alt=''/>
-                          </Grid>
-                           <Grid item lg={8} md={6} sm={4} xs={12}>
-                                       <p style={{fontFamily:'unset',color:'#292626',fontWeight:'bold'}}>{item.Name} </p>
-                                       <p style={{fontFamily:'unset',color:'blue',marginTop:'-1%'}}>Price: {item.Price}</p>
-                                       <p style={{fontFamily:'unset',color:'#292626',marginTop:'-2%'}}>Categorie: {item.CategorieName}</p>
-                           </Grid>
-                           <Grid item lg={2} md={3} sm={4} xs={12}>
-                                     <BagButton onClick={() => navigate(`/product/${item._id}`, {state: {...item}})}>
-                                     <LocalMallIcon color={'white'} />
-                                     </BagButton>
-                           </Grid>
-                       </Grid> 
-                               )
-                           })
-                       }
-                    </div>
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={classes.modal}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open}>
+            <div style={{ overflowY: 'scroll', }} className={classes.paper}>
+              <div style={{ backGroundColor: 'grey' }}>
+                <h2 style={{ textAlign: 'center' }}>Search Results</h2>
+                {searchResults &&
+                  searchResults.map((item) => {
+                    console.log(item)
+                    return (
+                      <Grid container key={item._id}>
+                        <Grid item lg={2} md={3} sm={4} xs={12} className={classes.searchCard} >
+                          <img src={`http://localhost:7000${item.image}`} height="97%" width="50%" style={{ margin: '3%' }} alt='' />
+                        </Grid>
+                        <Grid item lg={8} md={6} sm={4} xs={12}>
+                          <p style={{ fontFamily: 'unset', color: '#292626', fontWeight: 'bold' }}>{item.Name} </p>
+                          <p style={{ fontFamily: 'unset', color: 'blue', marginTop: '-1%' }}>Price: {item.Price}</p>
+                          <p style={{ fontFamily: 'unset', color: '#292626', marginTop: '-2%' }}>Categorie: {item.CategorieName}</p>
+                        </Grid>
+                        <Grid item lg={2} md={3} sm={4} xs={12}>
+                          <BagButton onClick={() => navigate(`/product/${item._id}`, { state: { ...item } })}>
+                            <LocalMallIcon color={'white'} />
+                          </BagButton>
+                        </Grid>
+                      </Grid>
+                    )
+                  })
+                }
               </div>
-            </Fade>
-          </Modal>
+            </div>
+          </Fade>
+        </Modal>
       </AppBar>
     )
   }
@@ -302,11 +325,11 @@ function Nav({ position }) {
     return (
       <AppBar position={position} className={classes.nav}>
         <Grid container>
-          <Grid item xs={12} lg={4} md={4} sm={12} xs={12}>
+          <Grid item xs={12} lg={4} md={4} sm={12}>
 
             <Link to='/' style={{ color: '#fff', fontFamily: 'unset', fontSize: 45, fontWeight: 'bold', textDecoration: 'none', margin: '2%' }}>E-Commerce</Link>
           </Grid>
-          <Grid xs={12} lg={4} md={4} sm={12} xs={12}>
+          <Grid xs={12} lg={4} md={4} sm={12}>
             <div className={classes.searchBox}>
               <Grid style={{ height: '100%', }} container>
                 <Grid item xs={9} lg={9} sm={9} md={9}>
@@ -330,7 +353,7 @@ function Nav({ position }) {
               </Grid>
             </div>
           </Grid>
-          <Grid item xs={12} lg={4} md={4} sm={12} xs={12}>
+          <Grid item xs={12} lg={4} md={4} sm={12}>
             <BootstrapButton
               variant="contained"
               color="primary"
@@ -370,7 +393,7 @@ function Nav({ position }) {
           </Grid>
         </Grid>
         <div>
-        <Modal
+          <Modal
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             className={classes.modal}
@@ -384,31 +407,31 @@ function Nav({ position }) {
           >
             <Fade in={open}>
               <div className={classes.paper}>
-              <div style={{backGroundColor:'grey'}}>
-                        <h2 style={{textAlign:'center'}}>Search Results</h2>
-                       {searchResults &&  
-                            searchResults?.map((item) => {
-                              console.log(item)                            
-                               return (   
-                                   <Grid container key={item._id}>
-                           <Grid item lg={2} md={3} sm={4} xs={12}  className={classes.searchCard} >
-                             <img src={`http://localhost:7000${item.image}`} height="97%" width="50%" style={{margin:'3%'}} alt=''/>
+                <div style={{ backGroundColor: 'grey' }}>
+                  <h2 style={{ textAlign: 'center' }}>Search Results</h2>
+                  {searchResults &&
+                    searchResults?.map((item) => {
+                      // alert(JSON.stringify(item))
+                      return (
+                        <Grid container key={item._id}>
+                          <Grid item lg={2} md={3} sm={4} xs={12} className={classes.searchCard} >
+                            <img src={`http://localhost:7000${item.image}`} height="97%" width="50%" style={{ margin: '3%' }} alt='' />
                           </Grid>
-                           <Grid item lg={8} md={6} sm={4} xs={12}>
-                                       <p style={{fontFamily:'unset',color:'#292626',fontWeight:'bold'}}>{item.Name} </p>
-                                       <p style={{fontFamily:'unset',color:'blue',marginTop:'-1%'}}>Price: {item.Price}</p>
-                                       <p style={{fontFamily:'unset',color:'#292626',marginTop:'-2%'}}>Categorie: {item.CategorieName}</p>
-                           </Grid>
-                           <Grid item lg={2} md={3} sm={4} xs={12}>
-                                     <BagButton onClick={() => navigate(`/product/${item._id}`, {state: {...item}})}>
-                                     <LocalMallIcon color={'white'} />
-                                     </BagButton>
-                           </Grid>
-                       </Grid> 
-                               )
-                           })
-                       }
-                    </div>
+                          <Grid item lg={8} md={6} sm={4} xs={12}>
+                            <p style={{ fontFamily: 'unset', color: '#292626', fontWeight: 'bold' }}>{item.Name} </p>
+                            <p style={{ fontFamily: 'unset', color: 'blue', marginTop: '-1%' }}>Price: {item.Price}</p>
+                            <p style={{ fontFamily: 'unset', color: '#292626', marginTop: '-2%' }}>Categorie: {item.CategorieName}</p>
+                          </Grid>
+                          <Grid item lg={2} md={3} sm={4} xs={12}>
+                            <BagButton onClick={() => navigate(`/product/${item._id}`, { state: { ...item } })}>
+                              <LocalMallIcon color={'white'} />
+                            </BagButton>
+                          </Grid>
+                        </Grid>
+                      )
+                    })
+                  }
+                </div>
               </div>
             </Fade>
           </Modal>
