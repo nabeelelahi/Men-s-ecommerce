@@ -143,7 +143,7 @@ function PlaceOrder() {
                                         console.log(resJSON, 'Register Response')
                                         if (resJSON.success) {
                                             alert("Your order has been place you should have recieved an email.")
-                                            window.history.back()
+                                            navigate("/shopnow")
                                         }
                                         else {
                                             alert(resJSON.message)

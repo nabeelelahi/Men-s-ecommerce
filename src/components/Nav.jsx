@@ -141,7 +141,7 @@ function Nav({ position }) {
 
     try {
       fetch(
-        `http://192.168.0.107:5000/`,
+        `http://192.168.2.107:5000/`,
         {
           method: "POST",
           body: form,
@@ -173,8 +173,6 @@ function Nav({ position }) {
     }
 
   }
-
-
 
   const user = JSON.parse(localStorage.getItem('user'))
 
@@ -278,7 +276,7 @@ function Nav({ position }) {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={menuOpen}
+          open={open}
           onClose={handleClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -290,7 +288,7 @@ function Nav({ position }) {
             <div className={classes.paper}>
               <div style={{ backGroundColor: 'grey' }}>
                 <h2 style={{ textAlign: 'center' }}>Search Results</h2>
-                {searchResults &&
+                {searchResults?.length &&
                   searchResults?.map((item) => {
                     // alert(JSON.stringify(item))
                     return (
