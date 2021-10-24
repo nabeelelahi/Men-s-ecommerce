@@ -96,7 +96,7 @@ function ContactUs() {
     const [age, setAge] = React.useState('');
     const [open, setOpen] = React.useState(false);
 
-    async function contactUsMesthod(values){
+    async function contactUsMesthod(values, actions){
     try {
         fetch(`http://localhost:7000/ecommerce.com/backend/api/v1/contact-us`, {
             method: 'POST',
@@ -106,7 +106,13 @@ function ContactUs() {
             body: JSON.stringify(values),
         }).then(async (response) => {
             const resJSON = await response.json()
-            console.log(resJSON, 'Review Response Response')
+            if(resJSON.success){
+                alert("We have recieved your response we will get back to you shortly")
+                actions?.resetForm()
+            }
+            else{
+                alert("something went wrong")
+            }
         })
     } catch (error) {
         console.log(error)

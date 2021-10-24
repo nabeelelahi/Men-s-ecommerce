@@ -196,12 +196,12 @@ function Nav({ position }) {
             <Grid className={classes.searchBar} style={{ height: '100%' }} container>
               <Grid item xs={3} lg={3} sm={3} md={3}>
                 <label htmlFor="icon-button-file">
-                  <Input 
-                  accept="image/*" 
-                  id="icon-button-file" 
-                  type="file" 
-                  style={{ display: 'none' }} 
-                  onChange={(e) => setUploadedImage(e.target.files[0])}
+                  <Input
+                    accept="image/*"
+                    id="icon-button-file"
+                    type="file"
+                    style={{ display: 'none' }}
+                    onChange={(e) => setUploadedImage(e.target.files[0])}
                   />
                   <IconButton variant="outlined" aria-label="upload picture" component="span">
                     <PhotoCamera style={{ color: '#fff' }} />
@@ -247,30 +247,18 @@ function Nav({ position }) {
           </BootstrapButton>
           {
             user ?
-              <>
-                <Button
-                  id="basic-button"
-                  aria-controls="basic-menu"
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-                  onClick={menuClick}
-                >
-                  Dashboard
-                </Button>
-                <Menu
-                  id="basic-menu"
-                  open={menuOpen}
-                  anchorEl={anchorEl}
-                  onClose={menuClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-                >
-                  <MenuItem onClick={menuClose}>Profile</MenuItem>
-                  <MenuItem onClick={menuClose}>My account</MenuItem>
-                  <MenuItem onClick={menuClose}>Logout</MenuItem>
-                </Menu>
-              </>
+              <BootstrapButton
+                variant="contained"
+                color="primary"
+                disableRipple
+                className={classes.margin}
+                onClick={() => {
+                  localStorage.clear()
+                  navigate("/")
+                }}
+              >
+                Logged in as { user?.Name }
+              </BootstrapButton>
               :
               <BootstrapButton
                 variant="contained"

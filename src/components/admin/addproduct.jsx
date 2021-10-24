@@ -211,7 +211,7 @@ function Addproduct() {
                                             }
                                         ).then(async (response) => {
                                             const resJSON = await response.json();
-                                            console.log(resJSON, " Agency Package Creation Response");
+                                            actions.resetForm()
                                         });
                                     } catch (error) {
                                         console.log(error);

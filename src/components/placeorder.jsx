@@ -96,6 +96,27 @@ function PlaceOrder() {
     const user = JSON.parse(localStorage.getItem('user'))
     const [quantity, setQuantity] = useState(0);
     const [amount, setAmount] = useState('');
+    const [open, setOpen] = React.useState(false);
+
+    const sizes = [
+        'Extra Small',
+        'Small',
+        'Medium',
+        'Large',
+        'Extra Large',
+        'US 5',
+        'US 6',
+        'US 7',
+        'US 8',
+        'US 9',
+    ];
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
 
     return (
         <>
@@ -105,31 +126,32 @@ function PlaceOrder() {
                     <Grid className={classes.signup} item lg={12} sm={12} md={12}>
                         <Formik
                             validationSchema={reviewSchema}
-                            initialValues={{ ProductName: Name,UserId: user._id, Email: user.Email, ProductId: _id, UserName: user.Name, UserPhone: user.Phone, Price: Price, Quantity: '', Credit: '', Zipcode: '', Date: '' }}
+                            initialValues={{ ProductName: Name, UserId: user._id, Email: user.Email, ProductId: _id, UserName: user.Name, UserPhone: user.Phone, Price: Price, Quantity: '', Credit: '', Zipcode: '', Date: '', sizes: '' }}
                             onSubmit={(values, actions) => {
                                 values.Amount = values.Price * values.Quantity
                                 console.log(values)
 
                                 try {
                                     fetch(`http://localhost:7000/ecommerce.com/backend/api/v1/create/order`, {
-                                      method: 'POST',
-                                      headers: {
-                                        'Content-Type': 'application/json'
-                                      },
-                                      body: JSON.stringify(values)
-                                    }).then(async(response) => {
-                                      const resJSON = await response.json()
-                                      console.log(resJSON, 'Register Response')
-                                      if(resJSON.info){
-                                        navigate('/')
-                                    }
-                                    else{
-                                        alert(resJSON.message)
-                                    }
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(values)
+                                    }).then(async (response) => {
+                                        const resJSON = await response.json()
+                                        console.log(resJSON, 'Register Response')
+                                        if (resJSON.success) {
+                                            alert("Your order has been place you should have recieved an email.")
+                                            window.history.back()
+                                        }
+                                        else {
+                                            alert(resJSON.message)
+                                        }
                                     })
-                                  } catch (error) {
+                                } catch (error) {
                                     console.log(error)
-                                  }
+                                }
                             }
                             }>
                             {(props) => {
@@ -142,19 +164,19 @@ function PlaceOrder() {
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>User Name:</p>
-                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%',borderBottom: "1px solid #9a9b9c"}}>{props.values.UserName}</p>
+                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%', borderBottom: "1px solid #9a9b9c" }}>{props.values.UserName}</p>
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '5%' }}>User Phone:</p>
-                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%',borderBottom: "1px solid #9a9b9c"}}>{props.values.UserPhone}</p>
+                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%', borderBottom: "1px solid #9a9b9c" }}>{props.values.UserPhone}</p>
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Product Name:</p>
-                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%',borderBottom: "1px solid #9a9b9c"}}>{props.values.ProductName}</p>
+                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%', borderBottom: "1px solid #9a9b9c" }}>{props.values.ProductName}</p>
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '5%' }}>Price:</p>
-                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%',borderBottom: "1px solid #9a9b9c"}}>{props.values.Price}</p>
+                                                    <p style={{ color: 'blue', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%', borderBottom: "1px solid #9a9b9c" }}>{props.values.Price}</p>
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Quantity:</p>
@@ -168,10 +190,31 @@ function PlaceOrder() {
                                                     <p style={{ color: '#8f0707', fontWeight: 'bold', fontSize: 12, textAlign: 'center' }}>{props.touched.Quantity && props.errors.Quantity}</p>
                                                 </Grid>
                                                 <Grid item lg={6} md={6} sm={12}>
-                                                    <p style={{ color: '#1c1c15', marginLeft: '5%' }}>Total Amount:</p>
-                                                    <p style={{ minHeight: '27px', color: '#8f0707', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%',borderBottom: "1px solid #9a9b9c"}}>{props.values.Quantity * props.values.Price}</p>
+                                                    <FormControl className={classes.formControl}>
+                                                        <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Size:</p>
+                                                        <Select
+                                                            labelId="demo-controlled-open-select-label"
+                                                            id="demo-controlled-open-select"
+                                                            open={open}
+                                                            onClose={handleClose}
+                                                            onOpen={handleOpen}
+                                                            value={props.values.sizes}
+                                                            onChange={props.handleChange("sizes")}
+                                                            onBlur={props.handleBlur("sizes")}
+                                                        >
+                                                            {sizes?.map((cat, index) => {
+                                                                return (
+                                                                    <MenuItem value={cat}>{cat}</MenuItem>
+                                                                )
+                                                            })}
+                                                        </Select>
+                                                    </FormControl>
                                                 </Grid>
-                                                <Grid item lg={12} md={12} sm={12}>
+                                                <Grid item lg={6} md={6} sm={12}>
+                                                    <p style={{ color: '#1c1c15', marginLeft: '5%' }}>Total Amount:</p>
+                                                    <p style={{ minHeight: '27px', color: '#8f0707', fontWeight: 'bold', fontSize: 20, backgroundColor: 'transparent', width: '95%', padding: '0.5%', borderBottom: "1px solid #9a9b9c" }}>{props.values.Quantity * props.values.Price}</p>
+                                                </Grid>
+                                                <Grid item lg={6} md={6} sm={12}>
                                                     <p style={{ color: '#1c1c15', marginLeft: '2.5%' }}>Address:</p>
                                                     <Input
                                                         className={classes.fullinput}
